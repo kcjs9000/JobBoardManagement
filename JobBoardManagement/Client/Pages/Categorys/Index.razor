@@ -18,8 +18,8 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <th>JobCategory</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -28,10 +28,10 @@
                     <tr>
                         <td>@category.JobCategory</td>
                         <td>
-                            <a href="/Colours/view/@category.Id" class="btn btn-primary">
+                            <a href="/category/view/@category.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/Colours/view/@category.Id" class="btn btn-warning">
+                            <a href="/category/view/@category.Id" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
                             <button class="btn btn-danger" @onclick="@(()=>Delete(category.Id))">
