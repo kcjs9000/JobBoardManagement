@@ -1,0 +1,67 @@
+﻿@page "/jlocation/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+    <a href="/jlocation/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Location
+    </a>
+    <br />
+    <br />
+    @if (JLocations == null)
+    {
+        <div class="alert alert-info">Loading location...</div>
+    }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Jlocation in JLocations)
+                {
+                <tr>
+                    <td>@Jlocation.JobLocation</td>
+                    <td>@Jlocation.PostalCode</td>
+                    <td>
+                        <a href="/Colours/view/@Jlocation.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Colours/view/@Jlocation.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Jlocation.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+@code {
+    private List<JLocation> JLocations;
+
+    protected async override Task OnInitializedAsync()
+    {
+        JLocations = await _client.GetFromJsonAsync<List<JLocation>>($"{Endpoint.JLocationsEndPoint}");
+    }
+
+    async Task Delete(int jlocationid)
+    {
+        var Jlocation = JLocations.First(q => q.Id == jlocationid);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Jlocation.JobLocation}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoint.JLocationsEndPoint}/{jlocationid}");
+            await OnInitializedAsync();
+        }
+    }
+    }

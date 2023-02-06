@@ -1,0 +1,66 @@
+﻿@page "/applicationjob/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+    <a href="/applicationjob/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Application
+    </a>
+    <br />
+    <br />
+    @if (Applications == null)
+    {
+        <div class="alert alert-info">Loading Application...</div>
+    }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var application in Applications)
+                {
+                    <tr>
+                        <td>@application.CoverLetter</td>
+                        <td>
+                            <a href="/Colours/view/@application.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/Colours/view/@application.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(application.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+@code {
+   private List<Application> Applications;
+
+   protected async override Task OnInitializedAsync()
+   {
+       Applications = await _client.GetFromJsonAsync<List<Application>>($"{Endpoint.ApplicationsEndPoint}");
+   }
+
+   async Task Delete(int applicationId)
+   {
+       var application = Applications.First(q => q.Id == applicationId);
+       var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {application.CoverLetter}?");
+       if (confirm)
+
+       {
+           await _client.DeleteAsync($"{Endpoint.ApplicationsEndPoint}/{applicationId}");
+           await OnInitializedAsync();
+       }
+   }
+    }

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoardManagement.Server", "JobBoardManagement\Server\JobBoardManagement.Server.csproj", "{6F52B084-7F72-4016-AD38-A37D92FEF381}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBoardManagement.Server", "JobBoardManagement\Server\JobBoardManagement.Server.csproj", "{6F52B084-7F72-4016-AD38-A37D92FEF381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoardManagement.Client", "JobBoardManagement\Client\JobBoardManagement.Client.csproj", "{C72F14BC-D799-479C-9445-3AEA2FC8D482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBoardManagement.Client", "JobBoardManagement\Client\JobBoardManagement.Client.csproj", "{C72F14BC-D799-479C-9445-3AEA2FC8D482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoardManagement.Shared", "JobBoardManagement\Shared\JobBoardManagement.Shared.csproj", "{5EB2D7B8-67EE-429F-8DA2-7C03D7E4101C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBoardManagement.Shared", "JobBoardManagement\Shared\JobBoardManagement.Shared.csproj", "{5EB2D7B8-67EE-429F-8DA2-7C03D7E4101C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

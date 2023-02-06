@@ -1,0 +1,63 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@application" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Cover Letter: </label>
+            <div>
+                <InputText @bind-Value="@application.CoverLetter" class="form-control" />
+                <ValidationMessage For="@(() => application.CoverLetter)" />
+            </div>
+        </div>
+        <div class=" form-group">
+            <label>Booking Time: </label>
+            <div>
+                <InputText @bind-Value="@application.ApplicationEmail" class="form-control" />
+                <ValidationMessage For="@(() => application.ApplicationEmail)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Resume: </label>
+            <div>
+                <InputSelect @bind-Value="application.ResumeId" class="form-control">
+                    <option value="">-- Select Resume --</option>
+                    @if (Resumes != null)
+                    {
+                        foreach (var resume in Resumes)
+                        {
+                <option value="@resume.Id">
+                    @resume.HighestQualification - @resume.WorkExperience - @resume.Achievements- @resume.Education
+                </option>}
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => application.ResumeId)" />
+            </div>
+        </div>
+
+
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+
+@code {
+
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Application application { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Resume> Resumes;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Resumes = await _client.GetFromJsonAsync<List<Resume>>($"{Endpoint.ResumeEndPoint}");
+    }
+}

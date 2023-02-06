@@ -1,0 +1,69 @@
+﻿@page "/resume/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+    <a href="/resume/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Register your Resume
+    </a>
+    <br />
+    <br />
+    @if (Resumes == null)
+    {
+        <div class="alert alert-info">Loading location...</div>
+    }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var resume in Resumes)
+                {
+                <tr>
+                    <td>@resume.HighestQualification</td>
+                    <td>@resume.WorkExperience</td>
+                    <td>@resume.Achievements</td>
+                    <td>@resume.Education</td>
+                    <td>
+                        <a href="/Colours/view/@resume.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Colours/view/@resume.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(resume.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+@code {
+    private List<Resume> Resumes;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Resumes = await _client.GetFromJsonAsync<List<Resume>>($"{Endpoint.ResumeEndPoint}");
+    }
+
+    async Task Delete(int resumeid)
+    {
+        var resume = Resumes.First(q => q.Id == resumeid);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {resume.HighestQualification}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoint.ResumeEndPoint}/{resumeid}");
+            await OnInitializedAsync();
+        }
+    }
+    }

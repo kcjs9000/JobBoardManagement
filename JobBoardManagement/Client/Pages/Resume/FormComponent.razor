@@ -1,0 +1,59 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@resume" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class=" form-group">
+            <label>Highest Qualification: </label>
+            <div>
+                <InputText @bind-Value="@resume.HighestQualification" class="form-control" />
+                <ValidationMessage For="@(() => resume.HighestQualification)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Work Experience: </label>
+            <div>
+                <InputText @bind-Value="@resume.WorkExperience" class="form-control" />
+                <ValidationMessage For="@(() => resume.WorkExperience)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Achievements: </label>
+            <div>
+                <InputText @bind-Value="@resume.Achievements" class="form-control" />
+                <ValidationMessage For="@(() => resume.Achievements)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Education: </label>
+            <div>
+                <InputText @bind-Value="@resume.Education" class="form-control" />
+                <ValidationMessage For="@(() => resume.Education)" />
+            </div>
+        </div>
+
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+
+@code {
+
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Resume resume { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<User> Users;
+
+    protected async override Task OnInitializedAsync()
+    {
+       Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoint.ResumeEndPoint}");
+    }
+}

@@ -1,0 +1,23 @@
+﻿@page "/job/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Create New Category</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Jobs" OnValidSubmit="@CreateJob" jobDetail="jobDetail" />
+
+    @code {
+        JobDetail jobDetail = new JobDetail();
+
+
+        private async Task CreateJob()
+        {
+            await _client.PostAsJsonAsync(Endpoint.JobsEndPoint, jobDetail);
+            _navManager.NavigateTo("/job/");
+        }
+
+    }
+

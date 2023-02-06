@@ -1,0 +1,75 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@employer" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Company Name: </label>
+            <div>
+                <InputText @bind-Value="@employer.CompanyName" class="form-control" />
+                <ValidationMessage For="@(() => employer.CompanyName)" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Company Email: </label>
+            <div>
+                <InputText @bind-Value="@employer.CompanyEmail" class="form-control" />
+                <ValidationMessage For="@(() => employer.CompanyEmail)" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Company Number: </label>
+            <div>
+                <InputText @bind-Value="@employer.CompanyNumber" class="form-control" />
+                <ValidationMessage For="@(() => employer.CompanyNumber)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Job </label>
+            <div>
+                <InputSelect @bind-Value="employer.JobId" class="form-control">
+                    <option value="">-- Select Job --</option>
+                    @if (Jobs != null)
+                    {
+                        foreach (var jobd in Jobs)
+                        {
+                <option value="@jobd.Id">
+                    @jobd.JobName- @jobd.JobDescription - @jobd.JobRequirements- @jobd.Positions-@jobd.Benefit - @jobd.Salary- @jobd.JobLocation -@jobd.JobCategory-@jobd.JobType
+                        '
+                </option>}
+}
+                </InputSelect>
+                <ValidationMessage For="@(() => employer.JobId)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+
+@code {
+
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Employer employer { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<JobDetail> Jobs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Jobs = await _client.GetFromJsonAsync<List<JobDetail>>($"{Endpoint.JobsEndPoint}");
+        
+    }
+
+}

@@ -1,0 +1,29 @@
+﻿@page "/applicationjob/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Create New Appliication</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Application" OnValidSubmit="@CreateApplication" application ="application" />
+
+    @code {
+        Application application = new Application();
+
+        private IList<Resume> Resumes;
+
+        protected async override Task OnInitializedAsync()
+        {
+            Resumes = await _client.GetFromJsonAsync<List<Resume>>($"{Endpoint.ResumeEndPoint}");
+        }
+
+        private async Task CreateApplication()
+        {
+            await _client.PostAsJsonAsync(Endpoint.ResumeEndPoint, application);
+            _navManager.NavigateTo("/applicationjob/");
+        }
+
+    }
+

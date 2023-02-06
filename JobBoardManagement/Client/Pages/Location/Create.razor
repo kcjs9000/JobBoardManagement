@@ -1,0 +1,23 @@
+﻿@page "/jlocation/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Create New Location</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Location" OnValidSubmit="@CreateLocation" jLocation="jLocation" />
+
+    @code {
+        JLocation jLocation = new JLocation();
+
+
+        private async Task CreateLocation()
+        {
+            await _client.PostAsJsonAsync(Endpoint.JLocationsEndPoint, jLocation);
+            _navManager.NavigateTo("/location/");
+        }
+
+    }
+
