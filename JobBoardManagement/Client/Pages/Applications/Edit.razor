@@ -1,0 +1,23 @@
+﻿@page "/applicationjob/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Booking </h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditApplication"  application ="application"/>
+
+@code {
+    [Parameter] public int id { get; set; }
+    Application application= new Application();
+
+    protected async override Task OnParametersSetAsync()
+    {
+       application = await _client.GetFromJsonAsync<Application>($"{Endpoint.ApplicationsEndPoint}/{id}");
+    }
+
+    async Task EditApplication()
+    {
+        await _client.PutAsJsonAsync($"{Endpoint.CategorysEndPoint}/{id}", application);
+        _navManager.NavigateTo("/application/");
+    }
+}

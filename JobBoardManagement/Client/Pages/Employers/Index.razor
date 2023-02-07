@@ -28,10 +28,10 @@
                     <tr>
                         <td>@employee.CompanyName</td>
                         <td>
-                            <a href="/Colours/view/@employee.Id" class="btn btn-primary">
+                            <a href="/employee/view/@employee.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/Colours/view/@employee.Id" class="btn btn-warning">
+                            <a href="/employee/edit/@employee.Id" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
                             <button class="btn btn-danger" @onclick="@(()=>Delete(employee.Id))">
