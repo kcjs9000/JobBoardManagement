@@ -1,0 +1,68 @@
+﻿@page "/salary/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+    <a href="/salary/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Salary Range
+    </a>
+    <br />
+    <br />
+    @if (Salaries == null)
+    {
+        <div class="alert alert-info">Loading location...</div>
+    }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>HighestSalary</th>
+                    <th>MinSalary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var salary in Salaries)
+                {
+                <tr>
+                    <td>@salary.HighestSalary</td>
+                    <td>@salary.MinSalary</td>
+                    
+                    <td>
+                        <a href="/Colours/view/@salary.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Colours/view/@salary.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(salary.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+@code {
+    private List<Salary> Salaries;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Salaries = await _client.GetFromJsonAsync<List<Salary>>($"{Endpoint.SalarysEndPoint}");
+    }
+
+    async Task Delete(int salaryid)
+    {
+        var salary = Salaries.First(q => q.Id == salaryid);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {salary.HighestSalary}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoint.SalarysEndPoint}/{salaryid}");
+            await OnInitializedAsync();
+        }
+    }
+    }

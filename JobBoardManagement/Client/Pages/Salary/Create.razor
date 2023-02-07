@@ -1,0 +1,23 @@
+﻿@page "/salary/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Register Salary</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Register Salary" OnValidSubmit="@Createsalary" salary="salary" />
+
+    @code {
+       Salary salary= new Salary();
+
+
+       private async Task Createsalary()
+        {
+            await _client.PostAsJsonAsync(Endpoint.SalarysEndPoint, salary);
+            _navManager.NavigateTo("/salary/");
+        }
+
+    }
+

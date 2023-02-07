@@ -1,0 +1,65 @@
+﻿@page "/jobtype/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+    <a href="/jobtype/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Choose jobtype
+    </a>
+    <br />
+    <br />
+    @if (jobTypes == null)
+    {
+        <div class="alert alert-info">Loading Jobs...</div>
+    }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>JobType</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var jobt in jobTypes)
+                {
+                    <tr>
+                        <td>@jobt.Jobtype</td>
+                        <td>
+                            <a href="/Colours/view/@jobt.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/Colours/view/@jobt.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(jobt.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+@code {
+    private List<JobType> jobTypes;
+
+    protected async override Task OnInitializedAsync()
+    {
+        jobTypes = await _client.GetFromJsonAsync<List<JobType>>($"{Endpoint.JobTypesEndPoint}");
+    }
+
+    async Task Delete(int jobtid)
+    {
+        var jobt= jobTypes.First(q => q.Id == jobtid);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {jobt.Jobtype}?");
+        if (confirm)
+
+        {
+            await _client.DeleteAsync($"{Endpoint.JobTypesEndPoint}/{jobtid}");
+            await OnInitializedAsync();
+        }
+    }
+    }

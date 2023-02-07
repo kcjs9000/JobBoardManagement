@@ -13,66 +13,56 @@ namespace JobBoardManagement.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobTypeController : ControllerBase
+    public class JobTypesController : ControllerBase
     {
-        //private readonly ApplicationDbContext _context;
-        private readonly IUnitOfWork _unitofWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-       // public JobTypeController(ApplicationDbContext context)
-       public JobTypeController(IUnitOfWork unitOfWork)
+        public JobTypesController(IUnitOfWork unitOfWork)
         {
-            //_context = context;
-            _unitofWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
-        // GET: api/JobType
+        // GET: api/JobTypes
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<JobType>>> GetJobTypes()
-        public async Task<IActionResult> GetJobTypes()
+        public async Task<ActionResult<IEnumerable<JobType>>> GetJobTypes()
         {
-            //return await _context.JobTypes.ToListAsync();
-            var jobTypes = await _unitofWork.JobTypes.GetAll();
+            var jobTypes = await _unitOfWork.JobTypes.GetAll();
             return Ok(jobTypes);
         }
 
-        // GET: api/JobType/5
+        // GET: api/JobTypes/5
         [HttpGet("{id}")]
-       // public async Task<ActionResult<JobType>> GetJobType(int id)
-       public async Task<IActionResult> GetJobType(int id)
+        public async Task<ActionResult<JobType>> GetJobType(int id)
         {
-            //var JobType = await _context.JobTypes.FindAsync(id);
-            var jobType = await _unitofWork.JobTypes.Get(q => q.Id == id);
+            var jobType = await _unitOfWork.JobTypes.Get(q => q.Id == id);
 
             if (jobType == null)
             {
                 return NotFound();
             }
 
-            return Ok(jobType);
+            return jobType;
         }
 
-        // PUT: api/JobType/5
+        // PUT: api/JobTypes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJobType(int id, JobType JobType)
+        public async Task<IActionResult> PutJobType(int id, JobType jobType)
         {
-            if (id != JobType.Id)
+            if (id != jobType.Id)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(JobType).State = EntityState.Modified;
-            _unitofWork.JobTypes.Update(JobType);
+            _unitOfWork.JobTypes.Update(jobType);
 
             try
             {
-                //await _context.SaveChangesAsync();
-                await _unitofWork.Save(HttpContext);
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-               // if (!JobTypeExists(id))
-               if(!await JobTypeExists(id))
+                if (!await JobTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -85,45 +75,37 @@ namespace JobBoardManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/JobType
+        // POST: api/JobTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<JobType>> PostJobType(JobType JobType)
+        public async Task<ActionResult<JobType>> PostJobType(JobType jobType)
         {
-            //_context.JobTypes.Add(JobType);
-            //await _context.SaveChangesAsync();
-            await _unitofWork.JobTypes.Insert(JobType);
-            await _unitofWork.Save(HttpContext);
+            await _unitOfWork.JobTypes.Insert(jobType);
+            await _unitOfWork.Save(HttpContext);
 
-
-            return CreatedAtAction("GetJobType", new { id = JobType.Id }, JobType);
+            return CreatedAtAction("GetJobType", new { id = jobType.Id }, jobType);
         }
 
-        // DELETE: api/JobType/5
+        // DELETE: api/JobTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJobType(int id)
         {
-            //var JobType = await _context.JobTypes.FindAsync(id);
-            var JobType = await _unitofWork.JobTypes.Get(q => q.Id == id);
-            if (JobType == null)
+            var jobType = await _unitOfWork.JobTypes.Get(q => q.Id == id);
+            if (jobType == null)
             {
                 return NotFound();
             }
 
-            //_context.JobTypes.Remove(JobType);
-            //await _context.SaveChangesAsync();
-            await _unitofWork.JobTypes.Delete(id);
-            await _unitofWork.Save(HttpContext);
+            await _unitOfWork.JobTypes.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        //private bool JobTypeExists(int id)
         private async Task<bool> JobTypeExists(int id)
         {
-            //return _context.JobTypes.Any(e => e.Id == id);
-            var JobType = await _unitofWork.JobTypes.Get(q => q.Id == id);
-            return JobType != null;
+            var jobType = await _unitOfWork.JobTypes.Get(q => q.Id == id);
+            return jobType != null;
         }
     }
 }

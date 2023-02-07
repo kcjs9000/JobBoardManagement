@@ -18,27 +18,29 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <th>CoverLetter</th>
+                    <th>ApplicationEmail</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var application in Applications)
                 {
-                    <tr>
-                        <td>@application.CoverLetter</td>
-                        <td>
-                            <a href="/applicationjob/view/@application.Id" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/applicationjob/view/@application.Id" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(()=>Delete(application.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@application.CoverLetter</td>
+                    <td>@application.ApplicationEmail</td>
+            
+                    <td>
+                        <a href="/applicationjob/view/@application.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/applicationjob/view/@application.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(application.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

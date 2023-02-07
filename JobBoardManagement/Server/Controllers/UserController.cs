@@ -13,66 +13,56 @@ namespace JobBoardManagement.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class usersController : ControllerBase
     {
-        //private readonly ApplicationDbContext _context;
-        private readonly IUnitOfWork _unitofWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-       // public UserController(ApplicationDbContext context)
-       public UserController(IUnitOfWork unitOfWork)
+        public usersController(IUnitOfWork unitOfWork)
         {
-            //_context = context;
-            _unitofWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
-        // GET: api/User
+        // GET: api/users
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        public async Task<IActionResult> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> Getusers()
         {
-            //return await _context.Users.ToListAsync();
-            var Users = await _unitofWork.users.GetAll();
-            return Ok(Users);
+            var userss = await _unitOfWork.users.GetAll(includes: q => q.Include(x => x.UserAppication));
+            return Ok(userss);
         }
 
-        // GET: api/User/5
+        // GET: api/users/5
         [HttpGet("{id}")]
-       // public async Task<ActionResult<User>> GetUser(int id)
-       public async Task<IActionResult> GetUser(int id)
+        public async Task<ActionResult<User>> Getuser(int id)
         {
-            //var User = await _context.Users.FindAsync(id);
-            var User = await _unitofWork.users.Get(q => q.Id == id);
+            var users = await _unitOfWork.users.Get(q => q.Id == id);
 
-            if (User == null)
+            if (users == null)
             {
                 return NotFound();
             }
 
-            return Ok(User);
+            return users;
         }
 
-        // PUT: api/User/5
+        // PUT: api/users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User User)
+        public async Task<IActionResult> Putuser(int id, User users)
         {
-            if (id != User.Id)
+            if (id != users.Id)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(User).State = EntityState.Modified;
-            _unitofWork.users.Update(User);
+            _unitOfWork.users.Update(users);
 
             try
             {
-                //await _context.SaveChangesAsync();
-                await _unitofWork.Save(HttpContext);
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-               // if (!UserExists(id))
-               if(!await UserExists(id))
+                if (!await userExists(id))
                 {
                     return NotFound();
                 }
@@ -85,45 +75,37 @@ namespace JobBoardManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User User)
+        public async Task<ActionResult<User>> Postuser(User users)
         {
-            //_context.Users.Add(User);
-            //await _context.SaveChangesAsync();
-            await _unitofWork.users.Insert(User);
-            await _unitofWork.Save(HttpContext);
+            await _unitOfWork.users.Insert(users);
+            await _unitOfWork.Save(HttpContext);
 
-
-            return CreatedAtAction("GetUser", new { id = User.Id }, User);
+            return CreatedAtAction("Getuser", new { id = users.Id }, users);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> Deleteuser(int id)
         {
-            //var User = await _context.Users.FindAsync(id);
-            var User = await _unitofWork.users.Get(q => q.Id == id);
-            if (User == null)
+            var users = await _unitOfWork.users.Get(q => q.Id == id);
+            if (users == null)
             {
                 return NotFound();
             }
 
-            //_context.Users.Remove(User);
-            //await _context.SaveChangesAsync();
-            await _unitofWork.users.Delete(id);
-            await _unitofWork.Save(HttpContext);
+            await _unitOfWork.users.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        //private bool UserExists(int id)
-        private async Task<bool> UserExists(int id)
+        private async Task<bool> userExists(int id)
         {
-            //return _context.Users.Any(e => e.Id == id);
-            var User = await _unitofWork.users.Get(q => q.Id == id);
-            return User != null;
+            var users = await _unitOfWork.users.Get(q => q.Id == id);
+            return users != null;
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@page "/jlocations/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View location</h3>
+
+<FormComponent jLocation="JLocation" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    JLocation JLocation = new JLocation();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        JLocation = await
+       _client.GetFromJsonAsync<JLocation>($"{Endpoint.JLocationsEndPoint}/{id}");
+    }
+}
