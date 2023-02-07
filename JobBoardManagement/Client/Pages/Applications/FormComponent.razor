@@ -59,5 +59,6 @@
     protected async override Task OnInitializedAsync()
     {
         Resumes = await _client.GetFromJsonAsync<List<Resume>>($"{Endpoint.ResumeEndPoint}");
+      
     }
 }

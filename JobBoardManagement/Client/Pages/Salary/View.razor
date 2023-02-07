@@ -1,0 +1,18 @@
+﻿@page "/salary/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Salary range</h3>
+
+<FormComponent salary="salary" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Salary salary = new Salary();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        salary = await
+       _client.GetFromJsonAsync<Salary>($"{Endpoint.SalarysEndPoint}/{id}");
+    }
+}

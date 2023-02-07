@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobBoardManagement.Server.Migrations
 {
-    public partial class AddApplicationTables : Migration
+    public partial class AddedNameToUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -274,10 +274,10 @@ namespace JobBoardManagement.Server.Migrations
                     JobRequirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Positions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Benefit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SalaryId = table.Column<int>(type: "int", nullable: true),
-                    JobLocationId = table.Column<int>(type: "int", nullable: true),
-                    JobCategoryId = table.Column<int>(type: "int", nullable: true),
-                    JobTypeId = table.Column<int>(type: "int", nullable: true),
+                    SalaryId = table.Column<int>(type: "int", nullable: false),
+                    JoblocationId = table.Column<int>(type: "int", nullable: false),
+                    Jobcategoryid = table.Column<int>(type: "int", nullable: false),
+                    Jobtypeid = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -287,29 +287,29 @@ namespace JobBoardManagement.Server.Migrations
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_Categorys_JobCategoryId",
-                        column: x => x.JobCategoryId,
+                        name: "FK_Jobs_Categorys_Jobcategoryid",
+                        column: x => x.Jobcategoryid,
                         principalTable: "Categorys",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_JLocations_JobLocationId",
-                        column: x => x.JobLocationId,
+                        name: "FK_Jobs_JLocations_JoblocationId",
+                        column: x => x.JoblocationId,
                         principalTable: "JLocations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_JobTypes_JobTypeId",
-                        column: x => x.JobTypeId,
+                        name: "FK_Jobs_JobTypes_Jobtypeid",
+                        column: x => x.Jobtypeid,
                         principalTable: "JobTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Jobs_Salarys_SalaryId",
                         column: x => x.SalaryId,
                         principalTable: "Salarys",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -321,6 +321,7 @@ namespace JobBoardManagement.Server.Migrations
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobId = table.Column<int>(type: "int", nullable: false),
                     JobDetailId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -345,7 +346,7 @@ namespace JobBoardManagement.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserAppicationId = table.Column<int>(type: "int", nullable: true),
+                    Applicationid = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -366,6 +367,7 @@ namespace JobBoardManagement.Server.Migrations
                     WorkExperience = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Achievements = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Education = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IDuser = table.Column<int>(type: "int", nullable: false),
                     UserIDId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -391,7 +393,7 @@ namespace JobBoardManagement.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CoverLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResumeId = table.Column<int>(type: "int", nullable: true),
+                    ResumeId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -405,7 +407,7 @@ namespace JobBoardManagement.Server.Migrations
                         column: x => x.ResumeId,
                         principalTable: "Resumes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -413,17 +415,8 @@ namespace JobBoardManagement.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "JobCategory", "UpdateBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 2, 2, 12, 45, 10, 543, DateTimeKind.Local).AddTicks(5398), new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(8487), "Engineering", "System" },
-                    { 2, "System", new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(9733), new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(9740), "logtistic", "System" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Employers",
-                columns: new[] { "Id", "CompanyEmail", "CompanyName", "CompanyNumber", "CreatedBy", "DateCreated", "DateUpdate", "JobDetailId", "UpdateBy" },
-                values: new object[,]
-                {
-                    { 1, "Riot@Riot.com", "Riot", "63324333", "System", new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7715), new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7725), null, "System" },
-                    { 2, "Valve@Valve.com", "Valve", "63324333", "System", new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7731), new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7733), null, "System" }
+                    { 1, "System", new DateTime(2023, 2, 7, 12, 31, 10, 490, DateTimeKind.Local).AddTicks(7398), new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(6803), "Engineering", "System" },
+                    { 2, "System", new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(7659), new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(7664), "logtistic", "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -431,35 +424,8 @@ namespace JobBoardManagement.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "JobLocation", "PostalCode", "UpdateBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3382), new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3393), "Tampinies", "752333", "System" },
-                    { 2, "System", new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3399), new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3401), "AMK", "568884", "System" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "JobTypes",
-                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "Jobtype", "UpdateBy" },
-                values: new object[,]
-                {
-                    { 1, "System", new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8637), new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8648), "Software", "System" },
-                    { 2, "System", new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8652), new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8654), "HardWARE", "System" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Jobs",
-                columns: new[] { "Id", "Benefit", "CreatedBy", "DateCreated", "DateUpdate", "JobCategoryId", "JobDescription", "JobLocationId", "JobName", "JobRequirements", "JobTypeId", "Positions", "SalaryId", "UpdateBy" },
-                values: new object[,]
-                {
-                    { 1, "break", "System", new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4522), new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4533), null, "Develop software", null, "Software Engineer", "Dipolma", null, "Developer", null, "System" },
-                    { 2, "break", "System", new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4539), new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4541), null, "Design", null, "Designer", "Dipolma", null, "Senior Designer", null, "System" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Resumes",
-                columns: new[] { "Id", "Achievements", "CreatedBy", "DateCreated", "DateUpdate", "Education", "HighestQualification", "UpdateBy", "UserIDId", "WorkExperience" },
-                values: new object[,]
-                {
-                    { 1, "3", "System", new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8731), new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8740), "NUS", "Degree", "System", null, "3 year" },
-                    { 2, "4", "System", new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8746), new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8748), "NP", "Diploma", "System", null, "6 year" }
+                    { 1, "System", new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(171), new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(178), "Tampinies", "752333", "System" },
+                    { 2, "System", new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(182), new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(184), "AMK", "568884", "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -467,17 +433,8 @@ namespace JobBoardManagement.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "HighestSalary", "MinSalary", "UpdateBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3201), new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3211), "4000", "2000", "System" },
-                    { 2, "System", new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3215), new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3218), "5000", "3000", "System" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "users",
-                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "UpdateBy", "UserAppicationId", "Username" },
-                values: new object[,]
-                {
-                    { 1, "System", new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7360), new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7371), "System", null, "Cheesemaker" },
-                    { 2, "System", new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7375), new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7377), "System", null, "CookieMaster123" }
+                    { 1, "System", new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3322), new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3329), "4000", "2000", "System" },
+                    { 2, "System", new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3332), new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3334), "5000", "3000", "System" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -541,19 +498,19 @@ namespace JobBoardManagement.Server.Migrations
                 column: "JobDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_JobCategoryId",
+                name: "IX_Jobs_Jobcategoryid",
                 table: "Jobs",
-                column: "JobCategoryId");
+                column: "Jobcategoryid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_JobLocationId",
+                name: "IX_Jobs_JoblocationId",
                 table: "Jobs",
-                column: "JobLocationId");
+                column: "JoblocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_JobTypeId",
+                name: "IX_Jobs_Jobtypeid",
                 table: "Jobs",
-                column: "JobTypeId");
+                column: "Jobtypeid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_SalaryId",
@@ -581,17 +538,17 @@ namespace JobBoardManagement.Server.Migrations
                 column: "UserIDId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_UserAppicationId",
+                name: "IX_users_Applicationid",
                 table: "users",
-                column: "UserAppicationId");
+                column: "Applicationid");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_users_Applications_UserAppicationId",
+                name: "FK_users_Applications_Applicationid",
                 table: "users",
-                column: "UserAppicationId",
+                column: "Applicationid",
                 principalTable: "Applications",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -26,7 +26,7 @@ namespace JobBoardManagement.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Resume>>> GetResumes()
         {
-            var resumes = await _unitOfWork.Resumes.GetAll();
+            var resumes = await _unitOfWork.Resumes.GetAll(includes: q => q.Include(x => x.UserID));
             return Ok(resumes);
         }
 

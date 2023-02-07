@@ -33,15 +33,11 @@ namespace JobBoardManagement.Server.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new CategorySeedConfiguration());
-            builder.ApplyConfiguration(new EmployerSeedConfiguration());
-            builder.ApplyConfiguration(new JobDetailSeedConfiguration());
-            builder.ApplyConfiguration(new JobTypeSeedConfiguration());
             builder.ApplyConfiguration(new LocationSeedConfiguration());
-            builder.ApplyConfiguration(new ResumeSeedConfiguration());
             builder.ApplyConfiguration(new SalarySeedConfiguration());
-            builder.ApplyConfiguration(new UserSeedConfiguration());
+
+
+
         }
-
-
     }
 }

@@ -1,0 +1,23 @@
+﻿@page "/salary/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit salary range </h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditLsalary" resume="resume" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Salary salary= new Salary();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        salary = await _client.GetFromJsonAsync<Salary>($"{Endpoint.SalarysEndPoint}/{id}");
+    }
+
+    async Task EditLsalary()
+    {
+        await _client.PutAsJsonAsync($"{Endpoint.SalarysEndPoint}/{id}", salary);
+        _navManager.NavigateTo("/salary/");
+    }
+}

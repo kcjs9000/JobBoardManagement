@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoardManagement.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230202044511_AddApplicationTables")]
-    partial class AddApplicationTables
+    [Migration("20230207043110_AddedNameToUser")]
+    partial class AddedNameToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,507 +124,6 @@ namespace JobBoardManagement.Server.Migrations
                     b.ToTable("PersistedGrants");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Application", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CoverLetter")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ResumeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
-
-                    b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("JobCategory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categorys");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 543, DateTimeKind.Local).AddTicks(5398),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(8487),
-                            JobCategory = "Engineering",
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(9733),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 544, DateTimeKind.Local).AddTicks(9740),
-                            JobCategory = "logtistic",
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Employer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CompanyEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("JobDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("JobDetailId");
-
-                    b.ToTable("Employers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyEmail = "Riot@Riot.com",
-                            CompanyName = "Riot",
-                            CompanyNumber = "63324333",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7715),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7725),
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CompanyEmail = "Valve@Valve.com",
-                            CompanyName = "Valve",
-                            CompanyNumber = "63324333",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7731),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 546, DateTimeKind.Local).AddTicks(7733),
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.JLocation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("JobLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("JLocations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3382),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3393),
-                            JobLocation = "Tampinies",
-                            PostalCode = "752333",
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3399),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(3401),
-                            JobLocation = "AMK",
-                            PostalCode = "568884",
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.JobDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Benefit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("JobCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("JobDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("JobLocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("JobName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobRequirements")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("JobTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Positions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SalaryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("JobCategoryId");
-
-                    b.HasIndex("JobLocationId");
-
-                    b.HasIndex("JobTypeId");
-
-                    b.HasIndex("SalaryId");
-
-                    b.ToTable("Jobs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Benefit = "break",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4522),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4533),
-                            JobDescription = "Develop software",
-                            JobName = "Software Engineer",
-                            JobRequirements = "Dipolma",
-                            Positions = "Developer",
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Benefit = "break",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4539),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(4541),
-                            JobDescription = "Design",
-                            JobName = "Designer",
-                            JobRequirements = "Dipolma",
-                            Positions = "Senior Designer",
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.JobType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Jobtype")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("JobTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8637),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8648),
-                            Jobtype = "Software",
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8652),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 547, DateTimeKind.Local).AddTicks(8654),
-                            Jobtype = "HardWARE",
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Resume", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Achievements")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Education")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HighestQualification")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserIDId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkExperience")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserIDId");
-
-                    b.ToTable("Resumes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Achievements = "3",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8731),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8740),
-                            Education = "NUS",
-                            HighestQualification = "Degree",
-                            UpdateBy = "System",
-                            WorkExperience = "3 year"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Achievements = "4",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8746),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 548, DateTimeKind.Local).AddTicks(8748),
-                            Education = "NP",
-                            HighestQualification = "Diploma",
-                            UpdateBy = "System",
-                            WorkExperience = "6 year"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Salary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("HighestSalary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MinSalary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Salarys");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3201),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3211),
-                            HighestSalary = "4000",
-                            MinSalary = "2000",
-                            UpdateBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3215),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(3218),
-                            HighestSalary = "5000",
-                            MinSalary = "3000",
-                            UpdateBy = "System"
-                        });
-                });
-
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserAppicationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserAppicationId");
-
-                    b.ToTable("users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7360),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7371),
-                            UpdateBy = "System",
-                            Username = "Cheesemaker"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7375),
-                            DateUpdate = new DateTime(2023, 2, 2, 12, 45, 10, 549, DateTimeKind.Local).AddTicks(7377),
-                            UpdateBy = "System",
-                            Username = "CookieMaster123"
-                        });
-                });
-
             modelBuilder.Entity("JobBoardManagement.Server.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -694,6 +193,395 @@ namespace JobBoardManagement.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResumeId");
+
+                    b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobCategory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 490, DateTimeKind.Local).AddTicks(7398),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(6803),
+                            JobCategory = "Engineering",
+                            UpdateBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(7659),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 491, DateTimeKind.Local).AddTicks(7664),
+                            JobCategory = "logtistic",
+                            UpdateBy = "System"
+                        });
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Employer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompanyEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("JobDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobDetailId");
+
+                    b.ToTable("Employers");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.JLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JLocations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(171),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(178),
+                            JobLocation = "Tampinies",
+                            PostalCode = "752333",
+                            UpdateBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(182),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(184),
+                            JobLocation = "AMK",
+                            PostalCode = "568884",
+                            UpdateBy = "System"
+                        });
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.JobDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Benefit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobRequirements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Jobcategoryid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JoblocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Jobtypeid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Positions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SalaryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Jobcategoryid");
+
+                    b.HasIndex("JoblocationId");
+
+                    b.HasIndex("Jobtypeid");
+
+                    b.HasIndex("SalaryId");
+
+                    b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.JobType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Jobtype")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobTypes");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Resume", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Achievements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HighestQualification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IDuser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserIDId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkExperience")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserIDId");
+
+                    b.ToTable("Resumes");
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Salary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HighestSalary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinSalary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Salarys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3322),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3329),
+                            HighestSalary = "4000",
+                            MinSalary = "2000",
+                            UpdateBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3332),
+                            DateUpdate = new DateTime(2023, 2, 7, 12, 31, 10, 493, DateTimeKind.Local).AddTicks(3334),
+                            HighestSalary = "5000",
+                            MinSalary = "3000",
+                            UpdateBy = "System"
+                        });
+                });
+
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Applicationid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Applicationid");
+
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -831,41 +719,51 @@ namespace JobBoardManagement.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Application", b =>
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Application", b =>
                 {
-                    b.HasOne("JobBoardManagement.Server.Domain.Resume", "Resume")
+                    b.HasOne("JobBoardManagement.Shared.Domain.Resume", "Resume")
                         .WithMany()
-                        .HasForeignKey("ResumeId");
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Employer", b =>
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Employer", b =>
                 {
-                    b.HasOne("JobBoardManagement.Server.Domain.JobDetail", "JobDetail")
+                    b.HasOne("JobBoardManagement.Shared.Domain.JobDetail", "JobDetail")
                         .WithMany()
                         .HasForeignKey("JobDetailId");
 
                     b.Navigation("JobDetail");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.JobDetail", b =>
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.JobDetail", b =>
                 {
-                    b.HasOne("JobBoardManagement.Server.Domain.Category", "JobCategory")
+                    b.HasOne("JobBoardManagement.Shared.Domain.Category", "JobCategory")
                         .WithMany()
-                        .HasForeignKey("JobCategoryId");
+                        .HasForeignKey("Jobcategoryid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("JobBoardManagement.Server.Domain.JLocation", "JobLocation")
+                    b.HasOne("JobBoardManagement.Shared.Domain.JLocation", "JobLocation")
                         .WithMany()
-                        .HasForeignKey("JobLocationId");
+                        .HasForeignKey("JoblocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("JobBoardManagement.Server.Domain.JobType", "JobType")
+                    b.HasOne("JobBoardManagement.Shared.Domain.JobType", "JobType")
                         .WithMany()
-                        .HasForeignKey("JobTypeId");
+                        .HasForeignKey("Jobtypeid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("JobBoardManagement.Server.Domain.Salary", "Salary")
+                    b.HasOne("JobBoardManagement.Shared.Domain.Salary", "Salary")
                         .WithMany()
-                        .HasForeignKey("SalaryId");
+                        .HasForeignKey("SalaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("JobCategory");
 
@@ -876,20 +774,22 @@ namespace JobBoardManagement.Server.Migrations
                     b.Navigation("Salary");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.Resume", b =>
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.Resume", b =>
                 {
-                    b.HasOne("JobBoardManagement.Server.Domain.User", "UserID")
+                    b.HasOne("JobBoardManagement.Shared.Domain.User", "UserID")
                         .WithMany()
                         .HasForeignKey("UserIDId");
 
                     b.Navigation("UserID");
                 });
 
-            modelBuilder.Entity("JobBoardManagement.Server.Domain.User", b =>
+            modelBuilder.Entity("JobBoardManagement.Shared.Domain.User", b =>
                 {
-                    b.HasOne("JobBoardManagement.Server.Domain.Application", "UserAppication")
+                    b.HasOne("JobBoardManagement.Shared.Domain.Application", "UserAppication")
                         .WithMany()
-                        .HasForeignKey("UserAppicationId");
+                        .HasForeignKey("Applicationid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UserAppication");
                 });
