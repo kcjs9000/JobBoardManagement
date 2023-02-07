@@ -18,8 +18,9 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <th>CompanyName</th>
+                    <th>CompanyEmail</th>
+                    <th>CompanyNumber</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,8 @@
                 {
                     <tr>
                         <td>@employee.CompanyName</td>
+                        <td>@employee.CompanyEmail</td>
+                        <td>@employee.CompanyNumber</td>
                         <td>
                             <a href="/employee/view/@employee.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>

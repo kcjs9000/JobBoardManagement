@@ -18,8 +18,14 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <th>Jobname</th>
+                    <th>JobDescription</th>
+                    <th>JobRequirement</th>
+                    <th>Positions</th>
+                    <th>Benefit</th>
+                    <th>Salary</th>
+                    <th>JobCategory</th>
+                    <th>JobType</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +33,14 @@
                 {
                     <tr>
                         <td>@jobDetail.JobName</td>
+                        <td>@jobDetail.JobDescription</td>
+                        <td>@jobDetail.JobRequirements</td>
+                        <td>@jobDetail.Positions</td>
+                        <td>@jobDetail.Benefit</td>
+                        <td>@jobDetail.Salary</td>
+                        <td>@jobDetail.JobCategory</td>
+                        <td>@jobDetail.JobType</td>
+                       
                         <td>
                             <a href="/jobs/view/@jobDetail.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
